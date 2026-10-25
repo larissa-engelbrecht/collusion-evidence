@@ -19,9 +19,8 @@ import matplotlib.pyplot as plt
 from agents import joint_max_price, nash_price
 from signals import load
 
-SIG = ["P", "C", "A", "D_int", "D_obs"]
-SIG_LABEL = ["P\nparallel\nprices", "C\ntalk", "A\ncoalition\nadvantage", "D_int\ndependence\n(ablation)",
-             "D_obs\ndependence\n(logs)"]
+SIG = ["P_gate", "P", "C", "A", "D_int", "D_obs"]
+SIG_LABEL = ["P gate\n(> 0.25,\nused in rules)", "P alone\n(fitted\nthreshold)", "C\ntalk", "A\ncoalition\nadvantage",           "D_int\ndependence\n(ablation)", "D_obs\ndependence\n(logs)"]
 GROUPS = [("collusion", False, "Collusion"), ("collusion", True, "Collusion + cost shock"),
           ("common_incentives", True, "Common incentives\n(cost shock)"),
           ("talk_only", False, "Talk only"), ("talk_only", True, "Talk only + cost shock")]
@@ -40,9 +39,10 @@ def fig1(rows, th, out):
         sub = [r for r in rows if r["case"] == case and bool(r["shock_round"]) == shock]
         if not sub:
             continue
-        grid.append([sum(float(r[s]) > th[s] for r in sub) / len(sub) for s in SIG])
+        th_all = {**th, "P_gate": 0.25}
+        grid.append([sum(float(r["P" if s == "P_gate" else s]) > th_all[s] for r in sub) / len(sub) for s in SIG])
         ylabels.append(f"{label}  (n={len(sub)})")
-    fig, ax = plt.subplots(figsize=(6.6, 3.4))
+    fig, ax = plt.subplots(figsize=(7.4, 3.5))
     ax.imshow(grid, cmap=cmap, vmin=0, vmax=1, aspect="auto")
     for i, row in enumerate(grid):
         for j, v in enumerate(row):
