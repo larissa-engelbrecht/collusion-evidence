@@ -1,0 +1,33 @@
+{
+  "frozen_at_utc": "2026-10-24T19:31:59+00:00",
+  "thresholds": {
+    "P": 0.9596425,
+    "C": 0.75,
+    "A": 0.013205000000000001,
+    "D_int": 0.29268,
+    "D_obs": 0.355
+  },
+  "P_gate": 0.25,
+  "train_balanced_accuracy": {
+    "P": 0.8,
+    "C": 0.75,
+    "A": 1.0,
+    "D_int": 1.0,
+    "D_obs": 0.9
+  },
+  "rules": [
+    "P alone (parallel conduct)",
+    "C alone (talk)",
+    "A alone (coalition advantage)",
+    "D_int alone (dependence, ablation)",
+    "D_obs alone (dependence, logs only)",
+    "P and C (parallel + talk)",
+    "P and (C or A or D_int) (any plus factor)",
+    "PRIMARY: P and (A or D_int)",
+    "Log-only: P and (A or D_obs)"
+  ],
+  "primary_rule": "PRIMARY: P and (A or D_int)",
+  "C_source": "LLM judge",
+  "train_signals_sha256": "c66c1fe5584a3b15ca8da21111f06dd169ea53714f19bdc52f3af24a90c29337",
+  "n_train": 30
+}
