@@ -21,11 +21,6 @@ python judge.py --limit 2   # try 2 calls first, check data/judge_cache.json
 python judge.py             # the rest (60 calls total, cached)
 python signals.py           # -> data/signals.csv
 python rule.py fit          # thresholds from TRAIN only -> data/frozen_rule.json
-
-git add -A
-git commit -m "Freeze decision rule before looking at test split"
-git tag rule-frozen
-
 python rule.py test         # -> results/test_results.md
 python figures.py           # -> results/fig1_signal_heatmap.png, fig2_price_paths.png
 ```
